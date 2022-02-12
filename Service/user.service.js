@@ -1,6 +1,6 @@
 const Joi = require('joi');
-const { BAD_REQUEST } = require('../Dictionary/status');
-const { ERROR_FIELD } = require('../Dictionary/errorMessages');
+const { BAD_REQUEST, NOT_FOUND } = require('../Dictionary/status');
+const { ERROR_FIELD, ERROR_LOGIN } = require('../Dictionary/errorMessages');
 
 const userSchemma = Joi.object({
   email: Joi.string().email().required(),
@@ -16,6 +16,17 @@ const verifyUser = (email, password) => {
   return true;
 };
 
+const verifyExistUser = async (email, password) => {
+  const existUser = await findUser(email, password);
+
+  if (!existUser) {
+    throw ({ status: NOT_FOUND, message: ERROR_LOGIN });
+  };
+
+  return existUser;
+};
+
 module.exports = {
   verifyUser,
+  verifyExistUser,
 };
