@@ -1,6 +1,9 @@
+const { INTERNAL_SERVER_ERROR } = require('../Dictionary/status');
+const { INTERNAL_ERROR } = require('../Dictionary/errorMessages');
+
 module.exports = (error, _req, res, _next) => {
   if (error.status) {
     return res.status(error.status).json({ message: error.message });
   }
-  return res.status(500).json({ message: 'Internal Error' });
+  return res.status(INTERNAL_SERVER_ERROR).json({ message: INTERNAL_ERROR });
 };

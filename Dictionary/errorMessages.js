@@ -3,6 +3,7 @@ const FIELDS_MISS = 'All fields must be filled.';
 const ERROR_LOGIN = 'Incorrect username or password.';
 const TOKEN_FAIL = 'jwt mal formed.';
 const TOKEN_MISS = 'Token não encontrado.';
+const INTERNAL_ERROR = 'Internal error.'
 
 module.exports = {
   ERROR_FIELD,
@@ -10,4 +11,5 @@ module.exports = {
   ERROR_LOGIN,
   TOKEN_FAIL,
   TOKEN_MISS,
+  INTERNAL_ERROR,
 };
