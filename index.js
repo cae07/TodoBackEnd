@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/login', loginController);
 app.use('/createUser', userController);
-app.use('/tasks', tasksController)
+app.use('/tasks', tasksController);
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
 
