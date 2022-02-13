@@ -10,27 +10,28 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
+
 describe('POST /login', () => {
-  describe('Quando o usuário existe', () => {
+  before(async () => {
+    const connection = await getConnection();
+    sinon.stub(MongoClient, 'connect')
+      .resolves(connection);
+  });
+  
+  after(async () => {
+    await MongoClient.connect.restore();
+  });
+
+  describe('1- Casos de sucesso', () => {
     let response = {};
-
     before(async () => {
-      const connection = await getConnection();
-      sinon.stub(MongoClient, 'connect')
-        .resolves(connection);
-
       response = await chai.request(server)
-        .post('/login')
-        .send({
-          email: 'test@gmail.com',
-          password: '123456',
-        });
-    });
-
-    after(async () => {
-      MongoClient.connect.restore();
-      await DBServer.stop();
-    });
+      .post('/login')
+      .send({
+        email: 'test@gmail.com',
+        password: '123456',
+      });
+    })
 
     it('Retorna um token', () => {
       expect(response).to.be.a('object');
