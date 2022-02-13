@@ -17,3 +17,5 @@ app.use('/login', loginController)
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
 
 app.use(handleError);
+
+module.exports = app;
