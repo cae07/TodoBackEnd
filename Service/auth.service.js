@@ -5,13 +5,13 @@ require('dotenv').config();
 const { API_SECRET } = process.env;
 
 const JWT_CONFIG = {
-  expiresIn: '1d',
+  expiresIn: '12h',
   algorithm: 'HS256',
 };
 
-const tokenGenerator = (data) => {
-  jwt.sign({ data }, API_SECRET, JWT_CONFIG);
-};
+const tokenGenerator = (data) => (
+  jwt.sign({ data }, API_SECRET, JWT_CONFIG)
+);
 
 const verifyToken = (token) => {
   try {

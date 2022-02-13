@@ -12,8 +12,11 @@ router.post('/', async (req, res, next) => {
     const { email, password } = req.body;
     verifyUser(email, password);
     const user = await verifyExistUser(email, password);
-    
-    res.status(OK).json({ token: 'ok!' });
+    const { password: _password, ...userWithoutPassword } = user;
+
+    const token = tokenGenerator(userWithoutPassword);
+
+    res.status(OK).json({ token });
   } catch (error) {
     next(error);
   }

@@ -25,6 +25,13 @@ describe('POST /login', () => {
   describe('1- Casos de sucesso', () => {
     let response = {};
     before(async () => {
+      await chai.request(server)
+      .post('/createUser')
+      .send({
+        email: 'test@gmail.com',
+        password: '123456',
+      });
+
       response = await chai.request(server)
       .post('/login')
       .send({
