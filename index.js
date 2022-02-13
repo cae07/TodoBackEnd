@@ -4,6 +4,7 @@ const handleError = require('./Middlewares/handleError');
 const {
   loginController,
   userController,
+  tasksController,
 } = require('./Controller');
 
 require('dotenv').config();
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 
 app.use('/login', loginController);
 app.use('/createUser', userController);
+app.use('/tasks', tasksController)
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
 

@@ -4,14 +4,12 @@ const { TOKEN_FAIL } = require('../Dictionary/errorMessages');
 
 module.exports = (req, res, next) => {
   try {
-    const failedToken = res.status(UNAUTHORIZED).json({ message: TOKEN_FAIL });
-
     const { authorization } = req.headers;
-
-    if (!authorization) return failedToken;
+    
+    if (!authorization) return res.status(UNAUTHORIZED).json({ message: TOKEN_FAIL });;
 
     const user = verifyToken(authorization);
-    if (!user) return failedToken;
+    if (!user) return res.status(UNAUTHORIZED).json({ message: TOKEN_FAIL });;
 
     req.user = user;
 

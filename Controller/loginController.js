@@ -19,7 +19,7 @@ router.post('/', async (req, res, next) => {
     res.status(OK).json({ token });
   } catch (error) {
     next(error);
-  }
+  };
 });
 
 module.exports = router;

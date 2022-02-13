@@ -17,9 +17,7 @@ const verifyToken = (token) => {
   try {
     const { data } = jwt.verify(token, API_SECRET);
 
-    const user = data;
-
-    return user;
+    return data;
   } catch (error) {
     console.error(error.message);
     return null;
