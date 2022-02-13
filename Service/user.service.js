@@ -19,7 +19,6 @@ const verifyUser = (email, password) => {
 };
 
 const verifyExistUser = async (email, password) => {
-  console.log('começou');
   const existUser = await findUser(email, password);
 
   if (!existUser) {
