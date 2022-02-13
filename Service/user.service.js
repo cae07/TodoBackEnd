@@ -30,7 +30,6 @@ const verifyExistUser = async (email, password) => {
 
 const verifyUserToCreate = async (email, password) => {
   const existEmail = await findEmail(email);
-  console.log(existEmail);
 
   if (existEmail) {
     throw ({ status: BAD_REQUEST , message: CREATE_USER_ERROR});
