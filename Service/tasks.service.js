@@ -3,6 +3,7 @@ const {
   getAllTasks,
   createNewTask,
   updateTask,
+  deleteTask,
 } = require('../Model/tasksModel');
 const { BAD_REQUEST } = require('../Dictionary/status');
 const { verifyId } = require('./helpers/tasks.helpers');
@@ -43,8 +44,16 @@ const verifyToUpdate = async (id, task, status) => {
   return updatedTask;
 };
 
+const verifyToDelete = async (id) => {
+  verifyId(id);
+  await deleteTask(id);
+
+  return true;
+};
+
 module.exports = {
   getTasks,
   verifyNewTask,
   verifyToUpdate,
+  verifyToDelete,
 };

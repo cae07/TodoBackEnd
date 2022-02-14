@@ -4,6 +4,7 @@ const {
   getTasks,
   verifyNewTask,
   verifyToUpdate,
+  verifyToDelete,
 } = require('../Service/tasks.service');
 const { OK, CREATED } = require('../Dictionary/status');
 
@@ -36,6 +37,17 @@ router.put('/', auth, async (req, res, next) => {
     const updatedTask = await verifyToUpdate(id, task, status);
 
     res.status(OK).json(updatedTask);
+  } catch (error) {
+    next(error);
+  };
+});
+
+router.delete('/', auth, async (req, res, next) => {
+  try {
+    const { id } = req.body;
+    await verifyToDelete(id);
+
+    res.status(OK).json({ message: 'Task deleted successfully!'});
   } catch (error) {
     next(error);
   };
