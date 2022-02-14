@@ -33,7 +33,7 @@ router.post('/', auth, async (req, res, next) => {
 router.put('/', auth, async (req, res, next) => {
   try {
     const { id, task, status } = req.body;
-    const updatedTask = await verifyToUpdate(task, status);
+    const updatedTask = await verifyToUpdate(id, task, status);
 
     res.status(OK).json('ok');
   } catch (error) {
