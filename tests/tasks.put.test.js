@@ -183,5 +183,22 @@ describe('PUT /tasks', () => {
         expect(response.body.message).to.equal('Invalid entries.');
       });
     });
+
+    describe('Caso token não informado', () => {
+      before(async () => {
+        response = await chai.request(server)
+        .put('/tasks')
+      });
+
+      it('Retorna status 401', () => {
+        expect(response).to.have.property('status');
+        expect(response).to.have.status(401);
+      });
+  
+      it('Retorna a mensagem "jwt mal formed."', () => {
+        expect(response.body).to.have.property('message');
+        expect(response.body.message).to.equal('jwt mal formed.');
+      });
+    });
   });
 });
