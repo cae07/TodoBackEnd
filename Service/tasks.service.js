@@ -5,6 +5,7 @@ const {
   updateTask,
 } = require('../Model/tasksModel');
 const { BAD_REQUEST } = require('../Dictionary/status');
+const { verifyId } = require('./helpers/tasks.helpers');
 
 const taskSchemma = Joi.object({
   task: Joi.string().min(6).required(),
@@ -30,6 +31,7 @@ const verifyNewTask = async (task) => {
 };
 
 const verifyToUpdate = async (id, task, status) => {
+  verifyId(id);
   const { error } = taskSchemma.validate({ task, status })
 
   if (error) {
@@ -37,7 +39,7 @@ const verifyToUpdate = async (id, task, status) => {
     throw ({ status: BAD_REQUEST, message });
   }
 
-  const updatedTask = await updateTask(task, status);
+  const updatedTask = await updateTask(id, task, status);
   return updatedTask;
 };
 
