@@ -20,7 +20,10 @@ describe('POST /tasks', () => {
   after(async () => {
     await MongoClient.connect.restore();
   });
+
   describe('8- Caso de sucesso', () => {
+    let response = {};
+    
     before(async () => {
       await chai.request(server)
       .post('/createUser')
@@ -60,28 +63,27 @@ describe('POST /tasks', () => {
   });
 
   describe('9- Caso de falha', () => {
-    describe('Quando não existir o campo "task"', () => {
-      let response = {};
-      let token = '';
+    let response = {};
+    let token = '';
 
-      before(async () => {
-        await chai.request(server)
-        .post('/createUser')
-        .send({
-          email: 'test@gmail.com',
-          password: '123456',
-        });
-  
-        const { body } = await chai.request(server)
-        .post('/login')
-        .send({
-          email: 'test@gmail.com',
-          password: '123456',
-        });
-
-        token = body.token;
+    before(async () => {
+      await chai.request(server)
+      .post('/createUser')
+      .send({
+        email: 'test@gmail.com',
+        password: '123456',
       });
 
+      const { body } = await chai.request(server)
+      .post('/login')
+      .send({
+        email: 'test@gmail.com',
+        password: '123456',
+      });
+
+      token = body.token;
+    });
+    describe('Quando não existir o campo "task"', () => {
       it('Retorna status 400', async () => {
         response = await chai.request(server)
         .post('/tasks')
@@ -99,27 +101,6 @@ describe('POST /tasks', () => {
     });
 
     describe('Quando o campo "task" estiver vazia', () => {
-      let response = {};
-      let token = '';
-
-      before(async () => {
-        await chai.request(server)
-        .post('/createUser')
-        .send({
-          email: 'test@gmail.com',
-          password: '123456',
-        });
-  
-        const { body } = await chai.request(server)
-        .post('/login')
-        .send({
-          email: 'test@gmail.com',
-          password: '123456',
-        });
-
-        token = body.token;
-      });
-
       it('Retorna status 400', async () => {
         response = await chai.request(server)
         .post('/tasks')
@@ -137,7 +118,6 @@ describe('POST /tasks', () => {
     });
 
     describe('Caso token não informado', () => {
-      let response = {};
       before(async () => {
         response = await chai.request(server)
         .get('/tasks');
