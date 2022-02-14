@@ -15,7 +15,15 @@ const createNewTask = async (task) => {
   return newTask;
 };
 
+const updateTask = async (status) => {
+  const db = await connection();
+  const updatedStatus = await db.collection('tasks').updateOne(
+    {  }
+  )
+}
+
 module.exports = {
   getAllTasks,
   createNewTask,
+  updateTask,
 };
