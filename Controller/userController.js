@@ -13,7 +13,6 @@ router.post('/', async (req, res, next) => {
     const newUser = await verifyUserToCreate(email, password);
     const { password: _password, ...userWithoutPassword } = newUser;
     const token = tokenGenerator(userWithoutPassword);
-    console.log(token);
 
     res.status(CREATED).json({ newUser, token });
   } catch (error) {
