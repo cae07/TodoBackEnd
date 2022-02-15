@@ -20,7 +20,7 @@ router.get('/', auth, async (_req, res, next) => {
   };
 });
 
-router.post('/new', auth, async (req, res, next) => {
+router.post('/newTask', auth, async (req, res, next) => {
   try {
     const { task } = req.body;
     const newTask = await verifyNewTask(task);
