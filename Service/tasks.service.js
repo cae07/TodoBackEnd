@@ -19,7 +19,7 @@ const getTasks = async () => {
   return allTasks;
 };
 
-const verifyNewTask = async (task) => {
+const verifyNewTask = async (task, userId) => {
   const { error } = taskSchemma.validate({ task, status: 'ok' });
 
   if(error) {
@@ -27,7 +27,7 @@ const verifyNewTask = async (task) => {
     throw ({ status: BAD_REQUEST, message });
   }
 
-  const newTask = await createNewTask(task);
+  const newTask = await createNewTask(task, userId);
   return newTask;
 };
 

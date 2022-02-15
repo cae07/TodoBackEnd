@@ -23,7 +23,8 @@ router.get('/', auth, async (_req, res, next) => {
 router.post('/newTask', auth, async (req, res, next) => {
   try {
     const { task } = req.body;
-    const newTask = await verifyNewTask(task);
+    const { _id: userId } = req.user;
+    const newTask = await verifyNewTask(task, userId);
     
     res.status(CREATED).json(newTask);
   } catch (error) {

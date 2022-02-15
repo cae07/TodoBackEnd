@@ -8,11 +8,11 @@ const getAllTasks = async () => {
   return allTasks;
 };
 
-const createNewTask = async (task) => {
+const createNewTask = async (task, userId) => {
   const db = await connection();
   const { insertedId } = await db.collection('tasks').insertOne({ task, status: 'pendente' });
 
-  const newTask = { id: insertedId, task, status: 'pendente' };
+  const newTask = { id: insertedId, task, userId, status: 'pendente' };
   return newTask;
 };
 
