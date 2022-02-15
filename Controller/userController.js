@@ -1,5 +1,6 @@
 const express = require('express');
 const { verifyUser, verifyUserToCreate } = require('../Service/user.service');
+const { tokenGenerator } = require('../Service/auth.service');
 const { CREATED } = require('../Dictionary/status');
 
 const router = express.Router();
@@ -10,8 +11,11 @@ router.post('/', async (req, res, next) => {
     verifyUser(email, password);
 
     const newUser = await verifyUserToCreate(email, password);
+    const { password: _password, ...userWithoutPassword } = newUser;
+    const token = tokenGenerator(userWithoutPassword);
+    console.log(token);
 
-    res.status(CREATED).json(newUser);
+    res.status(CREATED).json({ newUser, token });
   } catch (error) {
     next(error);
   };
