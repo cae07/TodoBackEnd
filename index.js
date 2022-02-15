@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const cors = require('cors');
+const { OK } = './Dictionary/status';
 const handleError = require('./Middlewares/handleError');
 const {
   loginController,
@@ -19,6 +20,10 @@ app.use(cors());
 app.use('/login', loginController);
 app.use('/createUser', userController);
 app.use('/tasks', tasksController);
+
+app.get('/', (req, res) => {
+  res.status(OK).send('Hello World')
+});
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
 
