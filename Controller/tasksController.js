@@ -20,7 +20,7 @@ router.get('/', auth, async (_req, res, next) => {
   };
 });
 
-router.post('/', auth, async (req, res, next) => {
+router.post('/new', auth, async (req, res, next) => {
   try {
     const { task } = req.body;
     const newTask = await verifyNewTask(task);
@@ -31,7 +31,7 @@ router.post('/', auth, async (req, res, next) => {
   };
 });
 
-router.put('/', auth, async (req, res, next) => {
+router.put('/update', auth, async (req, res, next) => {
   try {
     const { id, task, status } = req.body;
     const updatedTask = await verifyToUpdate(id, task, status);
@@ -42,7 +42,7 @@ router.put('/', auth, async (req, res, next) => {
   };
 });
 
-router.delete('/', auth, async (req, res, next) => {
+router.delete('/delete', auth, async (req, res, next) => {
   try {
     const { id } = req.body;
     await verifyToDelete(id);
