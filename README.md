@@ -23,12 +23,6 @@ Abaixo estão (i) os requisitos técnicos, (ii) as funcionalidades, (iii) crité
 - Back-End em NodeJS, com MongoDB;
 - Arquitetura em camadas;
 
-#### Requisitos técnicos
-
-- Front-End em React;
-- Back-End em NodeJS, com MongoDB;
-- Arquitetura em camadas;
-
 #### Funcionalidades
 
 - Visualizar a lista de tarefas;
