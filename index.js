@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
   res.status(OK).send('Hello World')
 });
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 
 app.use(handleError);
 
