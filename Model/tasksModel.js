@@ -22,7 +22,7 @@ const createNewTask = async (task, email) => {
   const db = await connection();
   const { insertedId } = await db.collection('tasks').insertOne({ task, user_email: email, status: 'pendente' });
 
-  const newTask = { id: insertedId, task, email, status: 'pendente' };
+  const newTask = { id: insertedId, task, user_email: email, status: 'pendente' };
   return newTask;
 };
 
