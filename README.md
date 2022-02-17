@@ -23,12 +23,6 @@ Abaixo estão (i) os requisitos técnicos, (ii) as funcionalidades, (iii) crité
 - Back-End em NodeJS, com MongoDB;
 - Arquitetura em camadas;
 
-#### Requisitos técnicos
-
-- Front-End em React;
-- Back-End em NodeJS, com MongoDB;
-- Arquitetura em camadas;
-
 #### Funcionalidades
 
 - Visualizar a lista de tarefas;
@@ -61,41 +55,42 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 
 ## Arquitetura da aplicação
 
+```
 ├── README.md
 ├── index.js
 ├── tests
-│  ├── connectionMock.js
-│  ├── createUser.test.js
-│  ├── login.test.js
-│  ├── tasks.delete.test.js
-│  ├── tasks.get.test.js
-│  ├── tasks.post.js
-│  └── tasks.put.js
+│   ├── connectionMock.js
+│   ├── createUser.test.js
+│   ├── login.test.js
+│   ├── tasks.delete.test.js
+│   ├── tasks.get.test.js
+│   ├── tasks.post.js
+│   └── tasks.put.js
 ├── services
-│  └── helpers
-│     └── tasks.helpers.js
-│  ├── auth.service.js
-│  ├── tasks.service.js
-│  └── user.service.js
+│   └── helpers
+│       └── tasks.helpers.js
+│   ├── auth.service.js
+│   ├── tasks.service.js
+│   └── user.service.js
 ├── Model
-│  ├── connection.js
-│  ├── tasksModel.js
-│  ├── userModel.js
+│   ├── connection.js
+│   ├── tasksModel.js
+│   ├── userModel.js
 ├── Middlewares
-│  ├── auth.js
-│  ├── handleError.js
+│   ├── auth.js
+│   ├── handleError.js
 ├── Dictionary
-│  ├── errorMessages.js
-│  ├── status.js
+│   ├── errorMessages.js
+│   ├── status.js
 ├── Controller
-│  ├── index.js
-│  ├── loginController.js
-│  ├── tasksController.js
-│  ├── userController.js
+│   ├── index.js
+│   ├── loginController.js
+│   ├── tasksController.js
+│   └── userController.js
 ├── package-lock.json
 └── package.json
 
----
+```
 
 ### Tecnologias
 
