@@ -13,13 +13,13 @@ const taskSchemma = Joi.object({
   status: Joi.string().required(),
 });
 
-const getTasks = async () => {
-  const allTasks = await getAllTasks();
+const getTasks = async (email) => {
+  const allTasks = await getAllTasks(email);
 
   return allTasks;
 };
 
-const verifyNewTask = async (task, userId) => {
+const verifyNewTask = async (task, email) => {
   const { error } = taskSchemma.validate({ task, status: 'ok' });
 
   if(error) {
@@ -27,7 +27,7 @@ const verifyNewTask = async (task, userId) => {
     throw ({ status: BAD_REQUEST, message });
   }
 
-  const newTask = await createNewTask(task, userId);
+  const newTask = await createNewTask(task, email);
   return newTask;
 };
 

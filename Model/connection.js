@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const mongodb = require('mongodb').MongoClient;
 
-const MONGO_DB_URL = process.env.HOST || 'mongodb://127.0.0.1:27017';
+const MONGO_DB_URL = 'mongodb://127.0.0.1:27017';
 const DB_NAME = 'Todolist';
 
 module.exports = () => mongodb.connect(MONGO_DB_URL, {

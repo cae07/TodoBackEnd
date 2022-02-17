@@ -1,18 +1,28 @@
 const { ObjectId } = require('mongodb');
 const connection = require('./connection');
 
-const getAllTasks = async () => {
+const getAllTasks = async (email) => {
   const db = await connection();
-  const allTasks = await db.collection('tasks').find({}).toArray();
+  const allTasks = await db.collection('users').aggregate([
+    { $match: { email } },
+    {
+      $lookup: {
+        from: "tasks",
+        localField: "email",
+        foreignField: "user_email",
+        as: "user_tasks",
+      },
+    },
+  ]).toArray();
 
   return allTasks;
 };
 
-const createNewTask = async (task, userId) => {
+const createNewTask = async (task, email) => {
   const db = await connection();
-  const { insertedId } = await db.collection('tasks').insertOne({ task, status: 'pendente' });
+  const { insertedId } = await db.collection('tasks').insertOne({ task, user_email: email, status: 'pendente' });
 
-  const newTask = { id: insertedId, task, userId, status: 'pendente' };
+  const newTask = { id: insertedId, task, email, status: 'pendente' };
   return newTask;
 };
 

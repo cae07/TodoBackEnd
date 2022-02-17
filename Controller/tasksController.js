@@ -10,9 +10,10 @@ const { OK, CREATED } = require('../Dictionary/status');
 
 const router = express.Router();
 
-router.get('/', auth, async (_req, res, next) => {
+router.get('/', auth, async (req, res, next) => {
   try {
-    const tasks = await getTasks();
+    const { email } = req.user;
+    const tasks = await getTasks(email);
 
     res.status(OK).json(tasks);
   } catch (error) {
@@ -23,8 +24,8 @@ router.get('/', auth, async (_req, res, next) => {
 router.post('/newTask', auth, async (req, res, next) => {
   try {
     const { task } = req.body;
-    const { _id: userId } = req.user;
-    const newTask = await verifyNewTask(task, userId);
+    const { email } = req.user;
+    const newTask = await verifyNewTask(task, email);
     
     res.status(CREATED).json(newTask);
   } catch (error) {
