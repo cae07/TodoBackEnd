@@ -69,7 +69,7 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 │
 ├── services
 │   └── helpers
-│       └── tasks.helpers.js
+│   │   └── tasks.helpers.js
 │   ├── auth.service.js
 │   ├── tasks.service.js
 │   └── user.service.js
