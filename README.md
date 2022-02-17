@@ -158,18 +158,22 @@ recebe como parâmetro um json com o campo
 #### endpoint PUT '/update'
 
 recebe como parâmetro um json com o campo
+```
 {
   "id": id da tarefa a ser atualizada e não pode ser vazio,
   "task": não pode ser vazio,
   "status": não pode ser vazio,
 }
+```
 
 #### endpoint DELETE '/delete'
 
 recebe como parâmetro um json com o campo
+```
 {
   "id": id da tarefa a ser deletada e não pode ser vazio,
 }
+```
 ---
 
 ### Comandos básicos
