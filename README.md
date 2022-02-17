@@ -107,6 +107,65 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 
 ---
 
+## Regras de negócio
+
+---
+
+### autenticação por token jwt
+
+Ao fazer login ou criar novo usuário, é retornado um `token` que é necessário para usar qualquer uma das seguintes rotas. Sendo enviado pelo `headers` como `authorization`.
+
+### Rota '/login'
+#### endpoint POST '/'
+
+recebe como parâmetro um json com os campos
+{
+  "email": precisa ser válido e não pode ser vazio,
+  "password": mínimo 6 dígitos e não pode ser vazio,
+}
+
+---
+
+### Rota '/createUser'
+#### endpoint POST '/'
+
+recebe como parâmetro um json com os campos
+{
+  "email": precisa ser válido e não pode ser vazio,
+  "password": mínimo 6 dígitos e não pode ser vazio,
+}
+
+---
+
+### Rota '/tasks'
+#### endpoint GET '/'
+
+Apenas necessário fazer o login de usuário antes de chamar a rota
+
+#### endpoint POST '/newTask'
+
+recebe como parâmetro um json com o campo
+{
+  "task": não pode ser vazio,
+}
+
+#### endpoint PUT '/update'
+
+recebe como parâmetro um json com o campo
+{
+  "id": id da tarefa a ser atualizada e não pode ser vazio,
+  "task": não pode ser vazio,
+  "status": não pode ser vazio,
+}
+
+#### endpoint DELETE '/delete'
+
+recebe como parâmetro um json com o campo
+{
+  "id": id da tarefa a ser deletada e não pode ser vazio,
+}
+---
+
 ### Comandos básicos
 
 ---
