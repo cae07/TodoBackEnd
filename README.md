@@ -66,27 +66,33 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 │   ├── tasks.get.test.js
 │   ├── tasks.post.js
 │   └── tasks.put.js
+│
 ├── services
 │   └── helpers
 │       └── tasks.helpers.js
 │   ├── auth.service.js
 │   ├── tasks.service.js
 │   └── user.service.js
+│
 ├── Model
 │   ├── connection.js
 │   ├── tasksModel.js
-│   ├── userModel.js
+│   └── userModel.js
+│
 ├── Middlewares
 │   ├── auth.js
-│   ├── handleError.js
+│   └── handleError.js
+│
 ├── Dictionary
 │   ├── errorMessages.js
-│   ├── status.js
+│   └── status.js
+│
 ├── Controller
 │   ├── index.js
 │   ├── loginController.js
 │   ├── tasksController.js
 │   └── userController.js
+│
 ├── package-lock.json
 └── package.json
 
