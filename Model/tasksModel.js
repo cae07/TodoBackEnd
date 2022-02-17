@@ -15,7 +15,7 @@ const getAllTasks = async (email) => {
     },
   ]).toArray();
 
-  return allTasks;
+  return allTasks[0].user_tasks; // retornar apenas as tasks
 };
 
 const createNewTask = async (task, email) => {
