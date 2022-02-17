@@ -35,6 +35,7 @@ router.post('/newTask', auth, async (req, res, next) => {
 router.put('/update', auth, async (req, res, next) => {
   try {
     const { id, task, status } = req.body;
+
     const updatedTask = await verifyToUpdate(id, task, status);
 
     res.status(OK).json(updatedTask);
