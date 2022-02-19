@@ -61,5 +61,5 @@ describe('2- Insere uma nova tarefa do DB', () => {
       const isIDValid = ObjectId.isValid(id);
       expect(isIDValid).not.to.be.false;
     });
-  })
+  });
 });
