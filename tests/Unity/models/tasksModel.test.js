@@ -1,8 +1,8 @@
 const sinon = require('sinon');
 const { expect } = require('chai');
 const { MongoClient } = require('mongodb');
-const { getConnection } = require('../connectionMock');
-const tasksModel = require('../../Model/tasksModel');
+const { getConnection } = require('../../connectionMock');
+const tasksModel = require('../../../Model/tasksModel');
 const { ObjectId } = require('mongodb');
 
 describe('2- Insere uma nova tarefa do DB', () => {

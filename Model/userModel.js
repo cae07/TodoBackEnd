@@ -3,6 +3,7 @@ const connection = require('./connection');
 const findUser = async (email, password) => {
   const db = await connection();
   const user = await db.collection('users').findOne({ email, password });
+  console.log(user);
   return user;
 };
 
