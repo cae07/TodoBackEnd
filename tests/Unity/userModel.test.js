@@ -2,8 +2,6 @@ const sinon = require('sinon');
 const { expect } = require('chai');
 const { MongoClient } = require('mongodb');
 const { getConnection } = require('../connectionMock');
-
-const mongoConnection = require('../../Model/connection');
 const userModel = require('../../Model/userModel');
 
 describe('1- Insere um novo usuário do DB', () => {
