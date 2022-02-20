@@ -1,12 +1,7 @@
 const Joi = require('joi');
-const {
-  getAllTasks,
-  createNewTask,
-  updateTask,
-  deleteTask,
-} = require('../Model/tasksModel');
+const tasksModel = require('../Model/tasksModel');
 const { BAD_REQUEST } = require('../Dictionary/status');
-const { verifyId } = require('./helpers/tasks.helpers');
+const helper = require('./helpers/tasks.helpers');
 
 const taskSchemma = Joi.object({
   task: Joi.string().min(6).required(),
@@ -14,7 +9,7 @@ const taskSchemma = Joi.object({
 });
 
 const getTasks = async (email) => {
-  const allTasks = await getAllTasks(email);
+  const allTasks = await tasksModel.getAllTasks(email);
 
   return allTasks;
 };
@@ -27,12 +22,12 @@ const verifyNewTask = async (task, email) => {
     throw ({ status: BAD_REQUEST, message });
   }
 
-  const newTask = await createNewTask(task, email);
+  const newTask = await tasksModel.createNewTask(task, email);
   return newTask;
 };
 
 const verifyToUpdate = async (id, task, status) => {
-  verifyId(id);
+  helper.verifyId(id);
   const { error } = taskSchemma.validate({ task, status })
 
   if (error) {
@@ -40,13 +35,13 @@ const verifyToUpdate = async (id, task, status) => {
     throw ({ status: BAD_REQUEST, message });
   }
 
-  const updatedTask = await updateTask(id, task, status);
+  const updatedTask = await tasksModel.updateTask(id, task, status);
   return updatedTask;
 };
 
 const verifyToDelete = async (id) => {
-  verifyId(id);
-  await deleteTask(id);
+  helper.verifyId(id);
+  await tasksModel.deleteTask(id);
 
   return true;
 };
