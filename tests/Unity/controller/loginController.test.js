@@ -29,7 +29,7 @@ describe('Ao tentar fazer login', () => {
         {
           id: mockedID, email, password, role: 'user'
         });
-        sinon.stub(token, 'tokenGenerator').returns({ token: mockedToken });
+        sinon.stub(token, 'tokenGenerator').returns(mockedToken);
     });
 
     after(async () => {
@@ -42,8 +42,6 @@ describe('Ao tentar fazer login', () => {
 
     it('Retorna um status com código 200', async () => {
       await loginController.login(request, response);
-
-      console.log(response.json);
 
       expect(response.status.calledWith(OK)).to.be.true;
     });

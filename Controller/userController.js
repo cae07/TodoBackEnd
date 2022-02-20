@@ -5,7 +5,7 @@ const { CREATED } = require('../Dictionary/status');
 
 const router = express.Router();
 
-router.post('/', async (req, res, next) => {
+const createUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     verifyUser(email, password);
@@ -18,6 +18,6 @@ router.post('/', async (req, res, next) => {
   } catch (error) {
     next(error);
   };
-});
+};
 
-module.exports = router;
+module.exports = { createUser };

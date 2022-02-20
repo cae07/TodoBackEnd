@@ -1,5 +1,5 @@
 const express = require('express');
-const auth = require('../Middlewares/auth');
+// const auth = require('../Middlewares/auth');
 const {
   getTasks,
   verifyNewTask,
@@ -10,7 +10,7 @@ const { OK, CREATED } = require('../Dictionary/status');
 
 const router = express.Router();
 
-router.get('/', auth, async (req, res, next) => {
+const GET = async (req, res, next) => {
   try {
     const { email } = req.user;
     const tasks = await getTasks(email);
@@ -19,9 +19,9 @@ router.get('/', auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   };
-});
+};
 
-router.post('/newTask', auth, async (req, res, next) => {
+const POST = async (req, res, next) => {
   try {
     const { task } = req.body;
     const { email } = req.user;
@@ -31,9 +31,9 @@ router.post('/newTask', auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   };
-});
+};
 
-router.put('/update', auth, async (req, res, next) => {
+const PUT = async (req, res, next) => {
   try {
     const { id, task, status } = req.body;
 
@@ -43,9 +43,9 @@ router.put('/update', auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   };
-});
+};
 
-router.delete('/delete', auth, async (req, res, next) => {
+const DELETE = async (req, res, next) => {
   try {
     const { id } = req.body;
     await verifyToDelete(id);
@@ -54,6 +54,8 @@ router.delete('/delete', auth, async (req, res, next) => {
   } catch (error) {
     next(error);
   };
-});
+};
 
-module.exports = router;
+module.exports = {
+  GET, POST, PUT, DELETE,
+};

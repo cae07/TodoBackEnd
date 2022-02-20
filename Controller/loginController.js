@@ -9,9 +9,9 @@ const login = async (req, res, next) => {
     const user = await userService.verifyExistUser(email, password);
     const { password: _password, ...userWithoutPassword } = user;
 
-    const token = tokenAuth.tokenGenerator(userWithoutPassword);
+    const userToken = tokenAuth.tokenGenerator(userWithoutPassword);
 
-    res.status(OK).json(token);
+    res.status(OK).json({ token: userToken });
   } catch (error) {
     next(error);
   };
