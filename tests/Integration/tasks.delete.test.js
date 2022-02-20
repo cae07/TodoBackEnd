@@ -69,7 +69,7 @@ describe('DELETE /tasks', () => {
     })
   });
 
-  describe('12- Caso de falha', () => {
+  describe('13- Caso de falha', () => {
     let response = {};
     let taskId = '';
     let token = '';
