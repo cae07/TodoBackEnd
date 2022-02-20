@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const { getConnection } = require('../connectionMock');
 
 const server = require('../../index');
@@ -12,9 +12,8 @@ const { expect } = chai;
 
 describe('POST /createUser', () => {
   before(async () => {
-    const connection = await getConnection();
-    sinon.stub(MongoClient, 'connect')
-      .resolves(connection);
+    const connectionMock = await getConnection();
+    sinon.stub(MongoClient, 'connect').resolves(connectionMock);
   });
   
   after(async () => {
@@ -37,10 +36,14 @@ describe('POST /createUser', () => {
     });
 
     it('Retorna o novo usuário', () => {
-      expect(response.body).to.have.property('id');
-      expect(response.body).to.have.property('email');
-      expect(response.body).to.have.property('password');
-      expect(response.body).to.have.property('role');
+      expect(response.body.newUser).to.have.property('id');
+      expect(response.body.newUser).to.have.property('email');
+      expect(response.body.newUser).to.have.property('password');
+      expect(response.body.newUser).to.have.property('role');
+    });
+
+    it('Retorna um token', () => {
+      expect(response.body).to.have.property('token');
     });
 
     it('Retorna status 201', () => {
