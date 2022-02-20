@@ -135,8 +135,8 @@ describe('Função verifyToUpdate', () => {
     helper.verifyId.restore();
   });
 
-  describe('10- Quando erro se tem os valores esperados', () => {
-    it('10- quando task vazio.', async () => {
+  describe('12- Quando erro se tem os valores esperados', () => {
+    it('quando task vazio.', async () => {
       try {
         await taskService.verifyToUpdate(id, '', status);
       } catch (error) {
@@ -146,7 +146,7 @@ describe('Função verifyToUpdate', () => {
       };
     });
 
-    it('10- quando status vazio.', async () => {
+    it('quando status vazio.', async () => {
       try {
         await taskService.verifyToUpdate(id, task, '');
       } catch (error) {
@@ -157,7 +157,7 @@ describe('Função verifyToUpdate', () => {
     });
   });
 
-  describe('11 -Quando tudo correto tem o retorno esperado', () => {
+  describe('13 -Quando tudo correto tem o retorno esperado', () => {
     const updatedTask = {
       id: '1',
       task: 'Andar de moto',
@@ -201,7 +201,7 @@ describe('Função verifyToUpdate', () => {
   });
 });
 
-describe('Função verifyToDelete', () => {
+describe('14- Função verifyToDelete', () => {
   const id = '3s2g81s5v8sw1v3';
 
   before(() => {
