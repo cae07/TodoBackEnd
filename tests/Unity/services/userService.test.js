@@ -57,7 +57,7 @@ describe('Função verifyExistUser', () => {
   describe('5- Quando o usuário não existe', () => {
     before(() => {
       sinon.stub(userModel, 'findUser')
-        .resolves(false);
+        .resolves({});
     });
 
     after(() => {
@@ -65,12 +65,26 @@ describe('Função verifyExistUser', () => {
     });
 
     it('Retorna erro "Incorrect username or password."', async () => {
-      await expect(userService.verifyExistUser.bind(userService, email, password))
-      .to.throw(ERROR_LOGIN);
+      try {
+        await userService.verifyExistUser(email, password);
+      } catch (error) {
+        expect(error).to.have.property('message');
+        expect(error.message).to.equal('Incorrect username or password.');
+      };
+    });
+
+    it('Retorna status 404', async () => {
+      try {
+        await userService.verifyExistUser(email, password);
+      } catch (error) {
+        expect(error).to.have.property('status');
+        expect(error.status).to.equal(404);
+      };
     });
   });
 
   describe('6- Quando o usuário existe', () => {
+    let response = {};
     before(() => {
       const user = {
         id: '604cb554311d68f491ba5781',
@@ -87,26 +101,20 @@ describe('Função verifyExistUser', () => {
     });
 
     it('retorna um objeto', async () => {
-      const response = await userService.verifyExistUser(email, password);
+      response = await userService.verifyExistUser(email, password);
 
       expect(response).to.be.a('object');
     });
 
     it('esse objeto possui propriedade email', async () => {
-      const response = await userService.verifyExistUser(email, password);
-
       expect(response).to.have.property('email');
     });
 
     it('esse objeto possui propriedade password', async () => {
-      const response = await userService.verifyExistUser(email, password);
-
       expect(response).to.have.property('password');
     });
 
     it('esse objeto possui propriedade role com valor "user"', async () => {
-      const response = await userService.verifyExistUser(email, password);
-
       expect(response).to.have.property('role');
       expect(response.role).to.be.equal('user');
     });
@@ -119,10 +127,10 @@ describe('Função verifyExistUser', () => {
 
     it('esse id é válido', async () => {
       const { id } = await userService.verifyExistUser(email, password);
-      const isValid = ObjectId(id)
+      const isValid = ObjectId.isValid(id);
 
       expect(isValid).to.be.a('boolean');
-      expect(isValid).to.be.equa(true);
+      expect(isValid).to.be.equal(true);
     });
   });
 });
@@ -137,12 +145,18 @@ describe('Função verifyUserToCreate', () => {
     });
 
     after(() => {
-      userModel.findUser.restore();
+      userModel.findEmail.restore();
     });
 
-    it('retorna erro "Email já existe"', async () => {
-      await expect(userService.verifyUserToCreate.bind(userService, email, password))
-      .to.throw(CREATE_USER_ERROR);
+    it('retorna erro "Email já existe com status 400"', async () => {
+      try {
+        await userService.verifyUserToCreate(email, password);
+      } catch (error) {
+        expect(error).to.have.property('message');
+        expect(error).to.have.property('status');
+        expect(error.message).to.be.equal('Email já existe');
+        expect(error.status).to.be.equal(400);
+      };
     });
   });
 
@@ -164,7 +178,8 @@ describe('Função verifyUserToCreate', () => {
     });
 
     after(() => {
-      userModel.findUser.restore();
+      userModel.findEmail.restore();
+      userModel.createNewUser.restore();
     });
 
     it('Retorna um objeto', () => {
@@ -181,15 +196,15 @@ describe('Função verifyUserToCreate', () => {
     });
 
     it('Esse objeto possui propriedade id', () => {
-      expect(response).to.have.property(id);
+      expect(response).to.have.property('id');
     });
 
     it('Esse id é válido', () => {
       const { id } = response;
-      const isValid = ObjectId(id)
+      const isValid = ObjectId.isValid(id)
 
       expect(isValid).to.be.a('boolean');
-      expect(isValid).to.be.equa(true);
+      expect(isValid).to.be.equal(true);
     });
   });
 });

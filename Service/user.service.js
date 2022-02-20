@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { findUser, findEmail, createNewUser } = require('../Model/userModel');
+const userModel = require('../Model/userModel');
 const { BAD_REQUEST, NOT_FOUND } = require('../Dictionary/status');
 const { ERROR_LOGIN, CREATE_USER_ERROR } = require('../Dictionary/errorMessages');
 
@@ -19,7 +19,7 @@ const verifyUser = (email, password) => {
 };
 
 const verifyExistUser = async (email, password) => {
-  const existUser = await findUser(email, password);
+  const existUser = await userModel.findUser(email, password);
 
   if (!existUser) {
     throw ({ status: NOT_FOUND, message: ERROR_LOGIN });
@@ -29,13 +29,13 @@ const verifyExistUser = async (email, password) => {
 };
 
 const verifyUserToCreate = async (email, password) => {
-  const existEmail = await findEmail(email);
+  const existEmail = await userModel.findEmail(email);
 
   if (existEmail) {
     throw ({ status: BAD_REQUEST , message: CREATE_USER_ERROR});
   }
 
-  const newUser = await createNewUser(email, password);
+  const newUser = await userModel.createNewUser(email, password);
   return newUser;
 };
 
