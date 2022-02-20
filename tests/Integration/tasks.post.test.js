@@ -40,7 +40,7 @@ describe('POST /tasks', () => {
       });
 
       response = await chai.request(server)
-      .post('/tasks')
+      .post('/tasks/newTask')
       .set({ "Authorization": `${body.token}` })
       .send({ task: 'Comprar coquinho' });
     });
@@ -86,7 +86,7 @@ describe('POST /tasks', () => {
     describe('Quando não existir o campo "task"', () => {
       it('Retorna status 400', async () => {
         response = await chai.request(server)
-        .post('/tasks')
+        .post('/tasks/newTask')
         .set({ "Authorization": token })
         .send({ "": 'Comprar coquinho' });
 
@@ -103,7 +103,7 @@ describe('POST /tasks', () => {
     describe('Quando o campo "task" estiver vazia', () => {
       it('Retorna status 400', async () => {
         response = await chai.request(server)
-        .post('/tasks')
+        .post('/tasks/newTask')
         .set({ "Authorization": token })
         .send({ "task": '' });
 
