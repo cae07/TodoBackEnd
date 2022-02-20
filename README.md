@@ -189,8 +189,11 @@ recebe como parâmetro um json com o campo
 #### Iniciar aplicação
 - npm start
 
-#### Rodar testes
-- npm test
+#### Rodar testes de Integração
+- npm run test-integration
+
+#### Rodar testes de Unidade
+- npm run test-unity
 
 ---
 
