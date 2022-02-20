@@ -6,6 +6,7 @@ const { CREATED } = require('../Dictionary/status');
 const router = express.Router();
 
 const POST = async (req, res, next) => {
+
   try {
     const { email, password } = req.body;
     userService.verifyUser(email, password);

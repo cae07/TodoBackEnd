@@ -68,7 +68,7 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 │   └── tasks.put.js
 │
 ├── services
-│   └── helpers
+│   ├── helpers
 │   │   └── tasks.helpers.js
 │   ├── auth.service.js
 │   ├── tasks.service.js
@@ -119,16 +119,18 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 
 ### autenticação por token jwt
 
-Ao fazer login ou criar novo usuário, é retornado um `token` que é necessário para usar qualquer uma das seguintes rotas. Sendo enviado pelo `headers` como `authorization`.
+Ao fazer login ou criar novo usuário, é retornado um `token` que é necessário para usar qualquer uma das outras rotas. Sendo necessário enviar pelo `headers` como `authorization`.
 
 ### Rota '/login'
 #### endpoint POST '/'
 
 recebe como parâmetro um json com os campos
+```
 {
   "email": precisa ser válido e não pode ser vazio,
   "password": mínimo 6 dígitos e não pode ser vazio,
 }
+```
 
 ---
 
@@ -136,10 +138,12 @@ recebe como parâmetro um json com os campos
 #### endpoint POST '/'
 
 recebe como parâmetro um json com os campos
+```
 {
   "email": precisa ser válido e não pode ser vazio,
   "password": mínimo 6 dígitos e não pode ser vazio,
 }
+```
 
 ---
 
@@ -151,25 +155,31 @@ Apenas necessário fazer o login de usuário antes de chamar a rota
 #### endpoint POST '/newTask'
 
 recebe como parâmetro um json com o campo
+```
 {
   "task": não pode ser vazio,
 }
+```
 
 #### endpoint PUT '/update'
 
 recebe como parâmetro um json com o campo
+```
 {
   "id": id da tarefa a ser atualizada e não pode ser vazio,
   "task": não pode ser vazio,
   "status": não pode ser vazio,
 }
+```
 
 #### endpoint DELETE '/delete'
 
 recebe como parâmetro um json com o campo
+```
 {
   "id": id da tarefa a ser deletada e não pode ser vazio,
 }
+```
 ---
 
 ### Comandos básicos
@@ -179,9 +189,16 @@ recebe como parâmetro um json com o campo
 #### Iniciar aplicação
 - npm start
 
-#### Rodar testes
-- npm test
+#### Rodar testes de Integração
+- npm run test-integration
+
+#### Rodar testes de Unidade
+- npm run test-unity
 
 ---
+
+## Repositório do Front-End
+
+`https://github.com/cae07/TodoFrontEnd`
 
 # Divirta-se
