@@ -26,22 +26,21 @@ describe('PUT /tasks', () => {
     let taskId = '';
 
     before(async () => {
-      await chai.request(server)
-      .post('/createUser')
-      .send({
+      const user = {
         email: 'test@gmail.com',
         password: '123456',
-      });
+      };
+
+      await chai.request(server)
+      .post('/createUser')
+      .send(user);
 
       const { body } = await chai.request(server)
       .post('/login')
-      .send({
-        email: 'test@gmail.com',
-        password: '123456',
-      });
+      .send(user);
 
       const addNewTask = await chai.request(server)
-      .post('/tasks')
+      .post('/tasks/newTask')
       .set({ "Authorization": `${body.token}` })
       .send({  task: 'Comprar coquinho'}
       );
@@ -49,7 +48,7 @@ describe('PUT /tasks', () => {
       taskId = addNewTask.body.id;
       
       response = await chai.request(server)
-      .put('/tasks')
+      .put('/tasks/update')
       .set({ "Authorization": `${body.token}` })
       .send(
         {
@@ -73,66 +72,69 @@ describe('PUT /tasks', () => {
   });
 
   describe('11- Casos de falha', () => {
-    let response = {};
     let taskId = '';
     let token = '';
 
     before(async () => {
-      await chai.request(server)
-      .post('/createUser')
-      .send({
+      const user = {
         email: 'test@gmail.com',
         password: '123456',
-      });
+      };
+
+      await chai.request(server)
+      .post('/createUser')
+      .send(user);
 
       const { body } = await chai.request(server)
       .post('/login')
-      .send({
-        email: 'test@gmail.com',
-        password: '123456',
-      });
-
-      token = body.token;
-
+      .send(user);
+      
       const addNewTask = await chai.request(server)
-      .post('/tasks')
-      .set({ "Authorization": token })
+      .post('/tasks/newTask')
+      .set({ "Authorization": body.token })
       .send({  task: 'Comprar coquinho'}
       );
-
+      
+      token = body.token;
       taskId = addNewTask.body.id;
     });
 
     describe('Quando não existir o campo "task"', () => {
-      it('Retorna status 400', async () => {
+      before(async () => {
         response = await chai.request(server)
-        .put('/tasks')
+        .put('/tasks/update')
         .set({ "Authorization": token })
         .send({
-          id: taskId,
-          status: 'pendente',
+          "id": taskId,
+          "task": "",
+          "status": 'pendente',
         });
+      });
 
+      it('Retorna status 400', () => {
         expect(response.error).to.have.property('status');
         expect(response.error).to.have.status(400);
       });
 
-      it('Retorna mensagem ""task" is required"', () => {
+      it('Retorna mensagem ""task" is not allowed to be empty"', () => {
         expect(response.body).to.have.property('message');
-        expect(response.body.message).to.equal('"task" is required');
+        expect(response.body.message).to.equal('"task" is not allowed to be empty');
       });
     });
 
     describe('Quando não existir o campo "id"', () => {
-      it('Retorna status 400', async () => {
+      before(async () => {
         response = await chai.request(server)
-        .put('/tasks')
+        .put('/tasks/update')
         .set({ "Authorization": token })
         .send({
-          task: 'qualquer tarefa',
-          status: 'pendente',
+          "id": "",
+          "task": "outra tarefa",
+          "status": 'pendente',
         });
+      });
 
+      it('Retorna status 400', () => {
         expect(response.error).to.have.property('status');
         expect(response.error).to.have.status(400);
       });
@@ -144,36 +146,41 @@ describe('PUT /tasks', () => {
     });
 
     describe('Quando não existir o campo "status"', () => {
-      it('Retorna status 400', async () => {
+      before(async () => {
         response = await chai.request(server)
-        .put('/tasks')
+        .put('/tasks/update')
         .set({ "Authorization": token })
         .send({
-          id: taskId,
-          task: 'qualquer tarefa',
+          "id": taskId,
+          "task": "outra tarefa",
+          "status": "",
         });
+      });
 
+      it('Retorna status 400', () => {
         expect(response.error).to.have.property('status');
         expect(response.error).to.have.status(400);
       });
 
-      it('Retorna mensagem ""status" is required"', () => {
+      it('Retorna mensagem ""status" is not allowed to be empty"', () => {
         expect(response.body).to.have.property('message');
-        expect(response.body.message).to.equal('"status" is required');
+        expect(response.body.message).to.equal('"status" is not allowed to be empty');
       });
     });
 
-    describe('Quando "id" for inválido', () => {
-      it('Retorna status 400', async () => {
+    describe('Quando "id" for inválido', async () => {
+      before(async () => {
         response = await chai.request(server)
-        .put('/tasks')
+        .put('/tasks/update')
         .set({ "Authorization": token })
         .send({
-          id: '368414365',
-          task: 'qualquer tarefa',
-          status: 'pendente',
+          "id": '12354687',
+          "task": "outra tarefa",
+          "status": "",
         });
+      });
 
+      it('Retorna status 400', () => {
         expect(response.error).to.have.property('status');
         expect(response.error).to.have.status(400);
       });
@@ -184,11 +191,9 @@ describe('PUT /tasks', () => {
       });
     });
 
-    describe('Caso token não informado', () => {
-      before(async () => {
-        response = await chai.request(server)
-        .put('/tasks')
-      });
+    describe('Caso token não informado', async () => {
+      const response = await chai.request(server)
+      .put('/tasks/update');
 
       it('Retorna status 401', () => {
         expect(response).to.have.property('status');
