@@ -2,9 +2,9 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
 const { MongoClient } = require('mongodb');
-const { getConnection } = require('./connectionMock');
+const { getConnection } = require('../connectionMock');
 
-const server = require('../index');
+const server = require('../../index');
 
 chai.use(chaiHttp);
 
@@ -41,7 +41,7 @@ describe('DELETE /tasks', () => {
       });
 
       const addNewTask = await chai.request(server)
-      .post('/tasks')
+      .post('/tasks/newTask')
       .set({ "Authorization": `${body.token}` })
       .send({  task: 'Comprar coquinho'}
       );
@@ -49,7 +49,7 @@ describe('DELETE /tasks', () => {
       taskId = addNewTask.body.id;
       
       response = await chai.request(server)
-      .delete('/tasks')
+      .delete('/tasks/delete')
       .set({ "Authorization": `${body.token}` })
       .send(
         {
@@ -69,7 +69,7 @@ describe('DELETE /tasks', () => {
     })
   });
 
-  describe('12- Caso de falha', () => {
+  describe('13- Caso de falha', () => {
     let response = {};
     let taskId = '';
     let token = '';
@@ -92,7 +92,7 @@ describe('DELETE /tasks', () => {
       token = body.token;
 
       const addNewTask = await chai.request(server)
-      .post('/tasks')
+      .post('/tasks/newTask')
       .set({ "Authorization": token })
       .send({  task: 'Comprar coquinho'}
       );
@@ -103,7 +103,7 @@ describe('DELETE /tasks', () => {
     describe('Quando não existir o campo id', () => {
       before(async () => {
         response = await chai.request(server)
-          .delete('/tasks')
+          .delete('/tasks/delete')
           .set({ "Authorization": token });
       });
 
@@ -121,7 +121,7 @@ describe('DELETE /tasks', () => {
     describe('Caso token não informado', () => {
       before(async () => {
         response = await chai.request(server)
-        .delete('/tasks')
+        .delete('/tasks/delete')
       });
 
       it('Retorna status 401', () => {

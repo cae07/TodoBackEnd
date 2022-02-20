@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "debug": "nodemon index.js",
-    "test": "mocha ./tests/**/*$NAME*.test.js --exit"
+    "test-integration": "mocha ./tests/Integration/**/*$NAME*.test.js --exit",
+    "test-unity": "mocha ./tests/Unity/**/*$NAME*.test.js --exit"
   },
   "repository": {
     "type": "git",
