@@ -1,18 +1,20 @@
 const express = require('express');
-const { verifyUser, verifyUserToCreate } = require('../Service/user.service');
-const { tokenGenerator } = require('../Service/auth.service');
+const userService = require('../Service/user.service');
+const tokenAuth = require('../Service/auth.service');
 const { CREATED } = require('../Dictionary/status');
 
 const router = express.Router();
 
-const createUser = async (req, res, next) => {
+const POST = async (req, res, next) => {
+
   try {
     const { email, password } = req.body;
-    verifyUser(email, password);
+    userService.verifyUser(email, password);
 
-    const newUser = await verifyUserToCreate(email, password);
+    const newUser = await userService.verifyUserToCreate(email, password);
+    
     const { password: _password, ...userWithoutPassword } = newUser;
-    const token = tokenGenerator(userWithoutPassword);
+    const token = tokenAuth.tokenGenerator(userWithoutPassword);
 
     res.status(CREATED).json({ newUser, token });
   } catch (error) {
@@ -20,4 +22,4 @@ const createUser = async (req, res, next) => {
   };
 };
 
-module.exports = { createUser };
+module.exports = { POST };
