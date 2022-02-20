@@ -1,10 +1,12 @@
 const express = require('express');
 const loginRouter = require('./loginRouter');
+const userRouter = require('./userRouter');
+const tasksRouter = require('./tasksRouter');
 
 const router = express.Router();
 
 router.use('/login', loginRouter);
-// app.use('/createUser', userController);
-// app.use('/tasks', tasksController);
+router.use('/createUser', userRouter);
+router.use('/tasks', tasksRouter);
 
 module.exports = router;
