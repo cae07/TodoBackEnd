@@ -11,10 +11,11 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('POST /tasks', () => {
+  let connectionMock;
   before(async () => {
-    const connection = await getConnection();
+    connectionMock = await getConnection();
     sinon.stub(MongoClient, 'connect')
-      .resolves(connection);
+      .resolves(connectionMock);
   });
   
   after(async () => {
@@ -43,6 +44,11 @@ describe('POST /tasks', () => {
       .post('/tasks/newTask')
       .set({ "Authorization": `${body.token}` })
       .send({ task: 'Comprar coquinho' });
+    });
+
+    after(async () => {
+      await connectionMock.db('Todolist').collection('users').drop();
+      await connectionMock.db('Todolist').collection('tasks').drop();
     });
 
     it('Retorna um objeto', () => {

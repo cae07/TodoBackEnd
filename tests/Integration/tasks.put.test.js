@@ -11,10 +11,11 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('PUT /tasks', () => {
+  let connectionMock;
   before(async () => {
-    const connection = await getConnection();
+    connectionMock = await getConnection();
     sinon.stub(MongoClient, 'connect')
-      .resolves(connection);
+      .resolves(connectionMock);
   });
   
   after(async () => {
@@ -59,6 +60,11 @@ describe('PUT /tasks', () => {
       );
     });
 
+    after(async () => {
+      await connectionMock.db('Todolist').collection('users').drop();
+      await connectionMock.db('Todolist').collection('tasks').drop();
+    });
+
     it('Retorna status 200', () => {
       expect(response).to.have.property('status');
       expect(response).to.have.status(200);
@@ -97,6 +103,11 @@ describe('PUT /tasks', () => {
       
       token = body.token;
       taskId = addNewTask.body.id;
+    });
+
+    after(async () => {
+      await connectionMock.db('Todolist').collection('users').drop();
+      await connectionMock.db('Todolist').collection('tasks').drop();
     });
 
     describe('Quando não existir o campo "task"', () => {

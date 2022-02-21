@@ -20,7 +20,7 @@ describe('1- Insere um novo usuário do DB', () => {
 
   after(async () => {
     await connectionMock.db('Todolist').collection('users').drop();
-    MongoClient.connect.restore();
+    await MongoClient.connect.restore();
   });
 
   describe('Quando inserido com sucesso', () => {

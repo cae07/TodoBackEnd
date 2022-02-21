@@ -1,7 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const sinon = require('sinon');
-const { MongoClient, ObjectId } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const { getConnection } = require('../connectionMock');
 
 const server = require('../../index');
@@ -19,16 +19,13 @@ describe('POST /createUser', () => {
   });
   
   after(async () => {
-    await connectionMock.db('TodoList').collection('users').drop();
-
+    await connectionMock.db('Todolist').collection('users').drop();
     await MongoClient.connect.restore();
   });
   
   describe('3- Casos de sucesso', () => {
     let response = {};
     before(async () => {
-      await connectionMock.db('Todolist').collection('users').drop();
-
       response = await chai.request(server)
       .post('/createUser')
       .send({
@@ -38,7 +35,7 @@ describe('POST /createUser', () => {
     });
 
     after(async () => {
-     await connectionMock.db('Todolist').collection('users').deleteMany();
+     await connectionMock.db('Todolist').collection('users').drop();
     });
 
     it('Retorna um objeto', () => {

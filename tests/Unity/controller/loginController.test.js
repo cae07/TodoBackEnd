@@ -38,6 +38,7 @@ describe('Ao tentar fazer login', () => {
 
       userService.verifyUser.restore();
       userService.verifyExistUser.restore();
+      token.tokenGenerator.restore();
     });
 
     it('Retorna um status com código 200', async () => {

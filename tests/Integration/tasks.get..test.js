@@ -11,15 +11,17 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('GET /tasks', () => {
+  let connectionMock;
   before(async () => {
-    const connection = await getConnection();
+    connectionMock = await getConnection();
     sinon.stub(MongoClient, 'connect')
-      .resolves(connection);
+      .resolves(connectionMock);
   });
   
   after(async () => {
     await MongoClient.connect.restore();
   });
+
   describe('6- Caso de sucesso', () => {
     let response = {};
     before(async () => {
@@ -40,6 +42,11 @@ describe('GET /tasks', () => {
       response = await chai.request(server)
       .get('/tasks')
       .set({ "Authorization": `${body.token}` });
+    });
+
+    after(async () => {
+      await connectionMock.db('Todolist').collection('users').drop();
+      await connectionMock.db('Todolist').collection('tasks').drop();
     });
 
     it('Retorna um objeto', () => {

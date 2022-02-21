@@ -11,13 +11,16 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('DELETE /tasks', () => {
+  let connectionMock;
   before(async () => {
-    const connection = await getConnection();
+    connectionMock = await getConnection();
     sinon.stub(MongoClient, 'connect')
-      .resolves(connection);
+      .resolves(connectionMock);
   });
   
   after(async () => {
+    await connectionMock.db('Todolist').collection('users').drop();
+    await connectionMock.db('Todolist').collection('tasks').drop();
     await MongoClient.connect.restore();
   });
 
@@ -51,11 +54,12 @@ describe('DELETE /tasks', () => {
       response = await chai.request(server)
       .delete('/tasks/delete')
       .set({ "Authorization": `${body.token}` })
-      .send(
-        {
-          id: taskId,
-        }
-      );
+      .send({ id: taskId });
+    });
+
+    after(async () => {
+      await connectionMock.db('Todolist').collection('users').drop();
+      await connectionMock.db('Todolist').collection('tasks').drop();
     });
 
     it('Retorna status 200', () => {
@@ -71,7 +75,6 @@ describe('DELETE /tasks', () => {
 
   describe('13- Caso de falha', () => {
     let response = {};
-    let taskId = '';
     let token = '';
 
     before(async () => {
@@ -98,6 +101,11 @@ describe('DELETE /tasks', () => {
       );
 
       taskId = addNewTask.body.id;
+    });
+
+    after(async () => {
+      await connectionMock.db('Todolist').collection('users').drop();
+      await connectionMock.db('Todolist').collection('tasks').drop();
     });
 
     describe('Quando não existir o campo id', () => {

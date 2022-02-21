@@ -20,7 +20,7 @@ describe('2- Insere uma nova tarefa do DB', () => {
 
   after(async () => {
     await connectionMock.db('Todolist').collection('tasks').drop();
-    MongoClient.connect.restore();
+    await MongoClient.connect.restore();
   });
 
   describe('Quando inserido com sucesso', () => {

@@ -20,7 +20,7 @@ describe('POST /login', () => {
   });
   
   after(async () => {
-    await connectionMock.db('TodoList').collection('users').drop();
+    await connectionMock.db('Todolist').collection('users').drop();
     await MongoClient.connect.restore();
   });
 
