@@ -169,6 +169,10 @@ describe('Função verifyToUpdate', () => {
       sinon.stub(tasksModel, 'updateTask').resolves(updatedTask);
     })
 
+    after(() => {
+      tasksModel.updateTask.restore();
+    });
+
     it('Retorna um objeto', async () => {
       const response = await taskService.verifyToUpdate(id, task, status);
   

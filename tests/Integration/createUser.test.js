@@ -17,12 +17,18 @@ describe('POST /createUser', () => {
   });
   
   after(async () => {
+    const db = (await getConnection()).db('Todolist');
+    await db.collection('users').deleteMany();
+
     await MongoClient.connect.restore();
   });
   
   describe('3- Casos de sucesso', () => {
     let response = {};
     before(async () => {
+      const connect = await getConnection();
+      await connect.db('Todolist').collection('users').deleteMany();
+
       response = await chai.request(server)
       .post('/createUser')
       .send({
@@ -31,7 +37,13 @@ describe('POST /createUser', () => {
       });
     });
 
+    after(async () => {
+      const connect = await getConnection();
+      await connect.db('Todolist').collection('users').deleteMany();
+    });
+
     it('Retorna um objeto', () => {
+      console.log(response.body);
       expect(response).to.be.a('object');
     });
 
