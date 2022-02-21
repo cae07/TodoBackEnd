@@ -8,6 +8,7 @@ const { OK } = require('../../../Dictionary/status');
 
 describe('Ao tentar fazer login', () => {
   describe('15- Quando tudo correto', () => {
+    let connectionMock;
     const response = {};
     const request = {};
     const email = "test@email.com";
@@ -16,8 +17,8 @@ describe('Ao tentar fazer login', () => {
     const mockedToken = '123456qweqwe';
 
     before(async () => {
-      const db = (await getConnection()).db('Todolist');
-      await db.collection('users').insertOne({ email, password });
+      connectionMock = await getConnection();
+      await connectionMock.db('Todolist').collection('users').insertOne({ email, password });
 
       request.body = { email, password };
 
@@ -33,12 +34,12 @@ describe('Ao tentar fazer login', () => {
     });
 
     after(async () => {
-      const db = (await getConnection()).db('Todolist');
-      await db.collection('users').drop();
+      connectionMock = await getConnection();
+      await connectionMock.db('Todolist').collection('users').drop();
 
-      userService.verifyUser.restore();
-      userService.verifyExistUser.restore();
-      token.tokenGenerator.restore();
+      await userService.verifyUser.restore();
+      await userService.verifyExistUser.restore();
+      await token.tokenGenerator.restore();
     });
 
     it('Retorna um status com código 200', async () => {
