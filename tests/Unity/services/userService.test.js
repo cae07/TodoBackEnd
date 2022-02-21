@@ -6,32 +6,59 @@ const { ERROR_LOGIN, CREATE_USER_ERROR } = require('../../../Dictionary/errorMes
 const { ObjectId } = require('mongodb');
 
 describe('Função verifyUser', () => {
-  const emptyEmail = "";
+  const empty = "";
   const incorrectEmail = "emailIncorreto";
   const email = "teste@email.com";
-  const emptyPassword = "";
   const incorrectPassword = "12345";
   const password = "123456";
 
   describe('3- Quando o email/password no payload informado está incorreto ou vazio', () => {
-    it('Quando email vazio retorna um erro ""email" is not allowed to be empty"', async () => {
-      expect(userService.verifyUser.bind(userService, emptyEmail, password))
-      .to.throw('"email" is not allowed to be empty');
+    it('Quando email vazio retorna um erro ""email" is not allowed to be empty" e status 400', () => {
+      try {
+        userService.verifyUser(empty, password);
+      } catch (error) {
+        console.log(error);
+        expect(error).to.have.property('message');
+        expect(error).to.have.property('status');
+        expect(error.message).to.be.equal('"email" is not allowed to be empty');
+        expect(error.status).to.be.equal(400);
+      }
     });
   
-    it('Quando email incorreto retorna um erro ""email" must be a valid email"', async () => {
-      expect(userService.verifyUser.bind(userService, incorrectEmail, password))
-      .to.throw('"email" must be a valid email');
+    it('Quando email incorreto retorna um erro ""email" must be a valid email" e status 400', () => {
+      try {
+        userService.verifyUser(incorrectEmail, password);
+      } catch (error) {
+        console.log(error);
+        expect(error).to.have.property('message');
+        expect(error).to.have.property('status');
+        expect(error.message).to.be.equal('"email" must be a valid email');
+        expect(error.status).to.be.equal(400);
+      }
     });
   
-    it('Quando password vazio retorna um erro ""password" is not allowed to be empty"', async () => {
-      expect(userService.verifyUser.bind(userService, email, emptyPassword))
-      .to.throw('"password" is not allowed to be empty');
+    it('Quando password vazio retorna um erro ""password" is not allowed to be empty" e status 400', () => {
+      try {
+        userService.verifyUser(email, empty);
+      } catch (error) {
+        console.log(error);
+        expect(error).to.have.property('message');
+        expect(error).to.have.property('status');
+        expect(error.message).to.be.equal('"password" is not allowed to be empty');
+        expect(error.status).to.be.equal(400);
+      }
     });
   
-    it('Quando password incorreto retorna um erro ""password" length must be at least 6 characters long"', async () => {
-      expect(userService.verifyUser.bind(userService, email, incorrectPassword))
-      .to.throw('"password" length must be at least 6 characters long');
+    it('Quando password incorreto retorna um erro ""password" length must be at least 6 characters long" e status 400', () => {
+      try {
+        userService.verifyUser(email, incorrectPassword);
+      } catch (error) {
+        console.log(error);
+        expect(error).to.have.property('message');
+        expect(error).to.have.property('status');
+        expect(error.message).to.be.equal('"password" length must be at least 6 characters long');
+        expect(error.status).to.be.equal(400);
+      }
     });
   });
 
@@ -60,8 +87,8 @@ describe('Função verifyExistUser', () => {
         .resolves({});
     });
 
-    after(() => {
-      userModel.findUser.restore();
+    after(async () => {
+      await userModel.findUser.restore();
     });
 
     it('Retorna erro "Incorrect username or password."', async () => {
