@@ -11,14 +11,15 @@ chai.use(chaiHttp);
 const { expect } = chai;
 
 describe('POST /createUser', () => {
+  let connectionMock;
+
   before(async () => {
-    const connectionMock = await getConnection();
+    connectionMock = await getConnection();
     sinon.stub(MongoClient, 'connect').resolves(connectionMock);
   });
   
   after(async () => {
-    const db = (await getConnection()).db('Todolist');
-    await db.collection('users').deleteMany();
+    await connectionMock.db('TodoList').collection('users').drop();
 
     await MongoClient.connect.restore();
   });
@@ -26,8 +27,7 @@ describe('POST /createUser', () => {
   describe('3- Casos de sucesso', () => {
     let response = {};
     before(async () => {
-      const connect = await getConnection();
-      await connect.db('Todolist').collection('users').deleteMany();
+      await connectionMock.db('Todolist').collection('users').drop();
 
       response = await chai.request(server)
       .post('/createUser')
@@ -38,12 +38,10 @@ describe('POST /createUser', () => {
     });
 
     after(async () => {
-      const connect = await getConnection();
-      await connect.db('Todolist').collection('users').deleteMany();
+     await connectionMock.db('Todolist').collection('users').deleteMany();
     });
 
     it('Retorna um objeto', () => {
-      console.log(response.body);
       expect(response).to.be.a('object');
     });
 
