@@ -4,7 +4,7 @@
 
 ---
 
-Projeto desenvolvido para avaliação de capacidades em uma vaga fullStack.
+Projeto desenvolvido para avaliação de capacidades em uma vaga fullStack
 
 ---
 
