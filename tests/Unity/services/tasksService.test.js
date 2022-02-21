@@ -15,14 +15,13 @@ describe('Função getTasks', () => {
         { id: '2', task: 'Andar de skate' , user_email: email, status: 'pendente' },
         { id: '3', task: 'Andar de onibus' , user_email: email, status: 'pendente' },
         { id: '4', task: 'Andar de patins' , user_email: email, status: 'pendente' },
-      ]
+      ];
 
-      sinon.stub(tasksModel, 'getAllTasks')
-        .resolves(tasks);
+      sinon.stub(tasksModel, 'getAllTasks').resolves(tasks);
     });
 
-    after(() => {
-      tasksModel.getAllTasks.restore();
+    after(async () => {
+      await tasksModel.getAllTasks.restore();
     });
 
     it('Retorna um array', async () => {
@@ -86,8 +85,8 @@ describe('Função verifyNewTask', () => {
       sinon.stub(tasksModel, 'createNewTask').resolves(newTask);
     });
 
-    after(() => {
-      tasksModel.createNewTask.restore();
+    after(async () => {
+      await tasksModel.createNewTask.restore();
     });
 
     it('Retorna um objeto', async () => {
@@ -131,8 +130,8 @@ describe('Função verifyToUpdate', () => {
     sinon.stub(helper, 'verifyId').resolves(true);
   });
 
-  after(() => {
-    helper.verifyId.restore();
+  after(async () => {
+    await helper.verifyId.restore();
   });
 
   describe('12- Quando erro se tem os valores esperados', () => {
@@ -167,7 +166,11 @@ describe('Função verifyToUpdate', () => {
 
     before(() => {
       sinon.stub(tasksModel, 'updateTask').resolves(updatedTask);
-    })
+    });
+
+    after(async () => {
+      await tasksModel.updateTask.restore();
+    });
 
     it('Retorna um objeto', async () => {
       const response = await taskService.verifyToUpdate(id, task, status);
@@ -209,9 +212,9 @@ describe('14- Função verifyToDelete', () => {
     sinon.stub(tasksModel, 'deleteTask').resolves(true);
   });
 
-  after(() => {
-    helper.verifyId.restore();
-    tasksModel.deleteTask.restore();
+  after(async () => {
+    await helper.verifyId.restore();
+    await tasksModel.deleteTask.restore();
   });
 
   it('Retorna um booleano', async () => {
