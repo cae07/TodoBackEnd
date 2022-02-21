@@ -12,13 +12,15 @@ const { expect } = chai;
 
 
 describe('POST /login', () => {
+  let connectionMock;
   before(async () => {
-    const connection = await getConnection();
+    connectionMock = await getConnection();
     sinon.stub(MongoClient, 'connect')
-      .resolves(connection);
+      .resolves(connectionMock);
   });
   
   after(async () => {
+    await connectionMock.db('TodoList').collection('users').drop();
     await MongoClient.connect.restore();
   });
 
@@ -49,6 +51,7 @@ describe('POST /login', () => {
       expect(response).to.have.status(200);
     });
   });
+
   describe('2- Casos de falha', () => {    
     let response = {};
 
