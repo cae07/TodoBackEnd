@@ -59,13 +59,29 @@ Foi feito o deploy da aplicação no `Heroku`, mas na falta desse, rodará na po
 ├── README.md
 ├── index.js
 ├── tests
-│   ├── connectionMock.js
-│   ├── createUser.test.js
-│   ├── login.test.js
-│   ├── tasks.delete.test.js
-│   ├── tasks.get.test.js
-│   ├── tasks.post.js
-│   └── tasks.put.js
+│   ├── Integration
+│   │   ├── createUser.test.js
+│   │   ├── login.test.js
+│   │   ├── tasks.delete.test.js
+│   │   ├── tasks.get.test.js
+│   │   ├── tasks.post.js
+│   │   └── tasks.put.js
+│   │
+│   ├── Unity
+│   │   ├── controller
+│   │   │   ├── tasks.get.test.js
+│   │   │   ├── tasks.post.js
+│   │   │   └── tasks.put.js
+│   │   │
+│   │   ├── models
+│   │   │   ├── tasks.post.js
+│   │   │   └── tasks.put.js
+│   │   │
+│   │   └── services
+│   │       ├── tasks.post.js
+│   │       └── tasks.put.js
+│   │
+│   └── connectionMock.js
 │
 ├── services
 │   ├── helpers
@@ -192,7 +208,7 @@ recebe como parâmetro um json com o campo
 #### Rodar testes de Integração
 - npm run test-integration
 
-#### Rodar testes de Unidade
+#### Rodar testes Unitários
 - npm run test-unity
 
 ---
