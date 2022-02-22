@@ -3,7 +3,6 @@ const { expect } = require('chai');
 const taskService = require('../../../Service/tasks.service');
 const tasksModel = require('../../../Model/tasksModel');
 const helper = require('../../../Service/helpers/tasks.helpers');
-// const { getConnection } = require('../../connectionMock');
 
 describe('Função getTasks', () => {
   const email = 'test@email.com';

@@ -17,7 +17,6 @@ describe('Função verifyUser', () => {
       try {
         userService.verifyUser(empty, password);
       } catch (error) {
-        console.log(error);
         expect(error).to.have.property('message');
         expect(error).to.have.property('status');
         expect(error.message).to.be.equal('"email" is not allowed to be empty');
@@ -29,7 +28,6 @@ describe('Função verifyUser', () => {
       try {
         userService.verifyUser(incorrectEmail, password);
       } catch (error) {
-        console.log(error);
         expect(error).to.have.property('message');
         expect(error).to.have.property('status');
         expect(error.message).to.be.equal('"email" must be a valid email');
@@ -41,7 +39,6 @@ describe('Função verifyUser', () => {
       try {
         userService.verifyUser(email, empty);
       } catch (error) {
-        console.log(error);
         expect(error).to.have.property('message');
         expect(error).to.have.property('status');
         expect(error.message).to.be.equal('"password" is not allowed to be empty');
@@ -53,7 +50,6 @@ describe('Função verifyUser', () => {
       try {
         userService.verifyUser(email, incorrectPassword);
       } catch (error) {
-        console.log(error);
         expect(error).to.have.property('message');
         expect(error).to.have.property('status');
         expect(error.message).to.be.equal('"password" length must be at least 6 characters long');
